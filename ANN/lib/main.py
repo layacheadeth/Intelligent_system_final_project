@@ -1,6 +1,6 @@
 def main():
     print("Hello World") # Delete this
-    # Implement neural network
+    # Implement artificial neural network
 
 
 main()

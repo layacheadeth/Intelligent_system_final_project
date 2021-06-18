@@ -14,8 +14,7 @@ def readCSV(filePath:str):
     return softmax(csv)
 
 # Beam Search Calculation
-def calcBeamSearch(mtx:np.ndarray, w:int, classes:str):
-    c = np.append(np.array(list(classes)), "")
+def calcBeamSearch(mtx:np.ndarray, w:int, c:np.ndarray):
     indexes = np.empty((0,w), int) # Top [beamWidth] biggest possibilities's indexes of each rows in matrix
     
     # Get top [beamWidth] values' indexes
@@ -34,7 +33,7 @@ def calcBeamSearch(mtx:np.ndarray, w:int, classes:str):
     return [''.join(res) for res in c[paths]]
 
 def main():
-    classes = " !\"#&'()*+,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz" # Classes
+    classes = np.append(np.array(list(" !\"#&'()*+,-./0123456789:;?ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz")), "") # Classes
     beamWidth = 3 # Beam width
     filePath = "BeamSearch/assets/data/line/rnnOutput.csv" # File path
     
@@ -46,7 +45,7 @@ def main():
         raise("Invalid Beam Width: Must be more than 0")
     if len(mtx) < 1:
         raise("Empty data")
-    if len(classes)+1 != len(mtx[0]):
+    if len(classes) != len(mtx[0]):
         raise("Different length for classes and data rows")
     if np.isnan(mtx).any():
         raise("Data contains non-number")
